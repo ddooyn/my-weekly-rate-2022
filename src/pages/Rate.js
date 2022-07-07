@@ -3,9 +3,23 @@ import { useNavigate, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 
 const Rate = ({ week, setWeek, rate, setRate }) => {
-  const dayIdx = useParams().day;
   const navigate = useNavigate();
+  const dayIdx = useParams().day;
+  
   useEffect(() => setRate(5), []);
+  useEffect(() => {
+    const handleKeyUp = (e) => {
+      if (e.key >= 1 && e.key <= 5) {
+        let num = parseInt(e.key);
+        setRate(num);
+        document.getElementById(`rate-${num}`).checked = true;
+      }
+    };
+    window.document.addEventListener('keyup', handleKeyUp);
+    return () => {
+      window.document.removeEventListener('keyup', handleKeyUp);
+    };
+  }, []);
 
   const onClickInput = (e) => {
     setRate(parseInt(e.target.value));
