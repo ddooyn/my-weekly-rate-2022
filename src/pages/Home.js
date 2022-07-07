@@ -10,21 +10,42 @@ const Home = ({ week, setWeek }) => {
   };
   getAvg();
 
+  let todayIdx = new Date().getDay();
   return (
     <>
-      {week.map((v, i) => (
+      {week.slice(todayIdx).map((v, i) => (
         <Day key={i}>
           <h3>{v.day}</h3>
-          {[...Array(+`${v.rate}`)].map((_, i) => (<Circle key={i}/>))}
-          {[...Array(5 - +`${v.rate}`)].map((_, i) => (<CircleEmpty key={i}/>))}
+          {[...Array(+`${v.rate}`)].map((_, i) => (
+            <Circle key={i} />
+          ))}
+          {[...Array(5 - +`${v.rate}`)].map((_, i) => (
+            <CircleEmpty key={i} />
+          ))}
+          <BtnRate to={`/rate/${todayIdx + i}`}>
+            <img src="/img/tri-right.svg" alt={`${v.day}요일 평점 남기기`} />
+          </BtnRate>
+        </Day>
+      ))}
+      {week.slice(0, todayIdx).map((v, i) => (
+        <Day key={i}>
+          <h3>{v.day}</h3>
+          {[...Array(+`${v.rate}`)].map((_, i) => (
+            <Circle key={i} />
+          ))}
+          {[...Array(5 - +`${v.rate}`)].map((_, i) => (
+            <CircleEmpty key={i} />
+          ))}
           <BtnRate to={`/rate/${i}`}>
             <img src="/img/tri-right.svg" alt={`${v.day}요일 평점 남기기`} />
           </BtnRate>
         </Day>
       ))}
+
       <TextRate>
         일주일 평균<AvgRate>{average.current}</AvgRate> 점
       </TextRate>
+
       <Button
         onClick={() => {
           setWeek(
