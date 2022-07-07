@@ -16,6 +16,7 @@ function App() {
     { day: '토', rate: 3 },
   ];
   const [week, setWeek] = useState(days);
+  const [rate, setRate] = useState(5);
 
   return (
     <>
@@ -23,7 +24,17 @@ function App() {
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<Home week={week} setWeek={setWeek} />} />
-          <Route path="/rate/:day" element={<Rate week={week} />} />
+          <Route
+            path="/rate/:day"
+            element={
+              <Rate
+                week={week}
+                setWeek={setWeek}
+                rate={rate}
+                setRate={setRate}
+              />
+            }
+          />
         </Route>
       </Routes>
     </>

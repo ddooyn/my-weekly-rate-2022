@@ -1,14 +1,23 @@
+import { useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 
-const Rate = ({ week }) => {
+const Rate = ({ week, setWeek, rate, setRate }) => {
   const dayIdx = useParams().day;
   const navigate = useNavigate();
+  useEffect(() => setRate(5), []);
+
+  const onClickInput = (e) => {
+    setRate(parseInt(e.target.value));
+  };
 
   const onClickSubmit = (e) => {
     e.preventDefault();
-    console.log(e);
-    // navigate('/');
+    setWeek(() => {
+      week[dayIdx]['rate'] = rate;
+      return week;
+    });
+    navigate('/');
   };
 
   return (
@@ -17,19 +26,43 @@ const Rate = ({ week }) => {
         <span>{week[dayIdx].day}</span>요일 평점 남기기
       </RateTitle>
       <Radios>
-        <input type="radio" name="radio-rate" id="rate-1" value={1} />
+        <input
+          type="radio"
+          name="radio-rate"
+          id="rate-1"
+          value={1}
+          onClick={onClickInput}
+        />
         <label htmlFor="rate-1">
           <Circle />
         </label>
-        <input type="radio" name="radio-rate" id="rate-2" value={2} />
+        <input
+          type="radio"
+          name="radio-rate"
+          id="rate-2"
+          value={2}
+          onClick={onClickInput}
+        />
         <label htmlFor="rate-2">
           <Circle />
         </label>
-        <input type="radio" name="radio-rate" id="rate-3" value={3} />
+        <input
+          type="radio"
+          name="radio-rate"
+          id="rate-3"
+          value={3}
+          onClick={onClickInput}
+        />
         <label htmlFor="rate-3">
           <Circle />
         </label>
-        <input type="radio" name="radio-rate" id="rate-4" value={4} />
+        <input
+          type="radio"
+          name="radio-rate"
+          id="rate-4"
+          value={4}
+          onClick={onClickInput}
+        />
         <label htmlFor="rate-4">
           <Circle />
         </label>
@@ -38,6 +71,7 @@ const Rate = ({ week }) => {
           name="radio-rate"
           id="rate-5"
           value={5}
+          onClick={onClickInput}
           defaultChecked
         />
         <label htmlFor="rate-5">
